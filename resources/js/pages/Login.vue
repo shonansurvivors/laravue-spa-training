@@ -62,8 +62,16 @@
       login () {
         console.log(this.loginForm)
       },
-      register () {
-        console.log(this.registerForm)
+      async register () {
+        // アクションを呼び出すには dispatch メソッドを使う
+        // 第一引数はアクションの名前
+        // namespaced: true としたので、ストア名/アクション名で指定可能
+        // 第二引数にはフォームの入力値を渡す(これがアクションの第二引数に)
+        await this.$store.dispatch('auth/register', this.registerForm)
+
+        // Promise の解決を待ってから、トップページに遷移するために pushを使う
+        // router.js で Vue.use(VueRouter) としたので、$routerが使える
+        this.$router.push('/')
       }
     }
   }
